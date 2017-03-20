@@ -25,7 +25,7 @@ class Population:
             if self.population[i].fitness > max_fitness:
                 max_fitness = self.population[i].fitness
                 max_fitness_index = i
-        print("Generation: " + str(self.generation))
+        print("GENERATION: " + str(self.generation))
         print("Best string: " + str(self.population[max_fitness_index].genes))
         print()
         self.mating_pool = []

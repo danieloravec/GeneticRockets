@@ -15,11 +15,10 @@ class DNA:
         return new_genes
 
     def calculate_fitness(self):
-        act_fitness = 0
+        self.fitness = 0
         for i in range(len(self.target)):
             if self.genes[i] == self.target[i]:
-                act_fitness += 1
-        self.fitness = act_fitness
+                self.fitness += 1
 
     def crossover(self, second_parent):
         child = DNA(self.target)

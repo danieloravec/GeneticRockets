@@ -13,4 +13,4 @@ class Init:
             self.population.calculate_fitness()
             self.population.natural_selection()
             self.population.next_generation()
-        print("Evolved to " + str(self.target) + " in generation " + str(self.population.generation))
+        print("Evolved to " + str(self.target) + " in Generation " + str(self.population.generation))
