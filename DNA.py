@@ -41,6 +41,6 @@ class DNA:
 
     def mutate(self, mutation_rate):
         for i in range(len(self.genes)):
-            random_number = random.randint(1, 101)
+            random_number = random.randint(1, 100)
             if random_number <= mutation_rate:
                 self.genes[i] = Vector.get_random_vector(self.target_diameter)

@@ -5,8 +5,9 @@ from Constants import Constants
 
 
 class Population:
-    def __init__(self, _population_size, _mutation_rate, _target_x, _target_y, _target_diameter, _target_color,
+    def __init__(self, _visualiser, _population_size, _mutation_rate, _target_x, _target_y, _target_diameter, _target_color,
                  _rocket_height, _rocket_width, _rocket_color):
+        self.visualiser = _visualiser
         self.generation = 0
         self.population_size = _population_size
         # Mutation rate in [%]
@@ -32,6 +33,7 @@ class Population:
             for j in range(len(self.population[i].genes)):
                 self.population[i].rocket.x += self.population[i].genes[j].x_movement
                 self.population[i].rocket.y += self.population[i].genes[j].y_movement
+                self.visualiser.redraw_situation()
                 x_distance = abs(self.population[i].rocket.x - self.target_x)
                 y_distance = abs(self.population[i].rocket.y - self.target_y)
                 act_distance = int(math.ceil(math.sqrt(x_distance ** 2 + y_distance ** 2)))
@@ -54,7 +56,7 @@ class Population:
                 random_number = random.randint(0, max_fitness)
                 random_index = random.randint(0, len(self.population) - 1)
                 # If something goes wrong, pick random element from population and then exit
-                if random_number < self.population[random_index].fitness or safe_counter > 1000:
+                if random_number < max_fitness / 2 or safe_counter > 1000:
                     self.mating_pool.append(self.population[random_index])
                     break
                 elif safe_counter > 1000:

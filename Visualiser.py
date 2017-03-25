@@ -20,7 +20,7 @@ class Visualiser:
         self.canvas = Canvas(self.root, width=self.canvas_width, heigh=self.canvas_height)
         self.canvas.pack()
         # Main part to be visualised
-        self.evolution = Init(_max_population, _mutation_rate, _target_x, _target_y, _target_diameter, _target_color,
+        self.evolution = Init(self, _max_population, _mutation_rate, _target_x, _target_y, _target_diameter, _target_color,
                               _rocket_height, _rocket_width, _rocket_color)
 
     def redraw_situation(self):
