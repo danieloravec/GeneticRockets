@@ -5,7 +5,7 @@ from Rocket import Rocket
 
 
 class DNA:
-    def __init__(self, _target_x, _target_y, _target_diameter, _population_size,
+    def __init__(self, _genes_amount, _target_x, _target_y, _target_diameter, _population_size,
                  _rocket_height, _rocket_width, _rocket_color):
         self.target_x = _target_x
         self.target_y = _target_y
@@ -14,12 +14,13 @@ class DNA:
         self.fitness = 0
         self.rocket = Rocket(0, 0, _rocket_height, _rocket_width, _rocket_color)
         self.min_distance_to_target = Constants.infinity
+        self.genes_amount = _genes_amount
         self.genes = []
         self.generate_genes()
 
     def generate_genes(self):
         self.genes = []
-        for _ in range(self.population_size):
+        for _ in range(self.genes_amount):
             y_movement = random.randint(-self.target_diameter, self.target_diameter)
             x_movement = random.randint(-self.target_diameter, self.target_diameter)
             new_vector = Vector.Vector(x_movement, y_movement, self.target_diameter)
@@ -29,7 +30,7 @@ class DNA:
         self.fitness = Constants.max_distance - self.min_distance_to_target
 
     def crossover(self, second_parent):
-        child = DNA(self.target_x, self.target_y, self.target_diameter, self.population_size,
+        child = DNA(self.genes_amount, self.target_x, self.target_y, self.target_diameter, self.population_size,
                     self.rocket.height, self.rocket.width, self.rocket.color)
         child.genes = []
         midpoint = random.randint(0, len(self.genes))
@@ -41,6 +42,6 @@ class DNA:
 
     def mutate(self, mutation_rate):
         for i in range(len(self.genes)):
-            random_number = random.randint(1, 101)
+            random_number = random.randint(1, 100)
             if random_number <= mutation_rate:
                 self.genes[i] = Vector.get_random_vector(self.target_diameter)

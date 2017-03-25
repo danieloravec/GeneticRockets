@@ -5,8 +5,9 @@ from Constants import Constants
 
 
 class Population:
-    def __init__(self, _population_size, _mutation_rate, _target_x, _target_y, _target_diameter, _target_color,
-                 _rocket_height, _rocket_width, _rocket_color):
+    def __init__(self, _visualiser, _population_size, _mutation_rate, _target_x, _target_y, _target_diameter, _target_color,
+                 _rocket_height, _rocket_width, _rocket_color, _genes_amount):
+        self.visualiser = _visualiser
         self.generation = 0
         self.population_size = _population_size
         # Mutation rate in [%]
@@ -20,7 +21,7 @@ class Population:
         self.x = 0
         self.y = 0
         for _ in range(self.population_size):
-            self.population.append(DNA(self.target_x, self.target_y, self.target_diameter, self.population_size,
+            self.population.append(DNA(_genes_amount, self.target_x, self.target_y, self.target_diameter, self.population_size,
                                        _rocket_height, _rocket_width, _rocket_color))
 
     def calculate_fitness(self):
@@ -32,6 +33,7 @@ class Population:
             for j in range(len(self.population[i].genes)):
                 self.population[i].rocket.x += self.population[i].genes[j].x_movement
                 self.population[i].rocket.y += self.population[i].genes[j].y_movement
+                self.visualiser.redraw_situation(self.population[i].rocket, i)
                 x_distance = abs(self.population[i].rocket.x - self.target_x)
                 y_distance = abs(self.population[i].rocket.y - self.target_y)
                 act_distance = int(math.ceil(math.sqrt(x_distance ** 2 + y_distance ** 2)))
@@ -54,10 +56,10 @@ class Population:
                 random_number = random.randint(0, max_fitness)
                 random_index = random.randint(0, len(self.population) - 1)
                 # If something goes wrong, pick random element from population and then exit
-                if random_number < self.population[random_index].fitness or safe_counter > 1000:
+                if random_number < max_fitness / 2 or safe_counter > 100:
                     self.mating_pool.append(self.population[random_index])
                     break
-                elif safe_counter > 1000:
+                elif safe_counter > 100:
                     break
 
     def next_generation(self):

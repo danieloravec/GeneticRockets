@@ -4,5 +4,5 @@ class Rocket:
         self.height = _height
         self.width = _width
         self.color = _color
-        self.x = _x
-        self.y = _y
+        self.x = 100
+        self.y = 100
